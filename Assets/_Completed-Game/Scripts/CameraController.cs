@@ -25,6 +25,8 @@ public class CameraController : MonoBehaviour {
     [SerializeField]
     private float angleTrim = 100f;
 
+    public bool canInput;
+
     // At the start of the game..
     void Start ()
 	{
@@ -39,17 +41,21 @@ public class CameraController : MonoBehaviour {
 	// After the standard 'Update()' loop runs, and just before each frame is rendered..
 	void LateUpdate ()
 	{
-        // Set the position of the Camera (the game object this script is attached to)
-        // to the player's position, plus the offset amount
-        //! transform.position = player.transform.position + offset;
+        if (canInput)
+        {
+            // Set the position of the Camera (the game object this script is attached to)
+            // to the player's position, plus the offset amount
+            //! transform.position = player.transform.position + offset;
 
-        // 水平方向の入力から
-        // 角度変化量を計算
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        deltaAngle += moveHorizontal * Time.deltaTime * angleTrim; // 角度変化分
+            // 水平方向の入力から
+            // 角度変化量を計算
+            float moveHorizontal = Input.GetAxis("Horizontal");
+            deltaAngle += moveHorizontal * Time.deltaTime * angleTrim; // 角度変化分
 
-        // ワールドY軸を中心とした回転分の角度*初期角度
-        transform.rotation = Quaternion.AngleAxis(deltaAngle, Vector3.up) * defRotation;
+            // ワールドY軸を中心とした回転分の角度*初期角度
+            transform.rotation = Quaternion.AngleAxis(deltaAngle, Vector3.up) * defRotation;
+        }
+        
         // プレイヤー位置からカメラ後方にoffset（初期位置関係）の距離だけ離れた場所
         transform.position = player.transform.position - transform.forward * offset.magnitude;
 
