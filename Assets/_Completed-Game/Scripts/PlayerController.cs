@@ -1,8 +1,4 @@
 ﻿using UnityEngine;
-
-// Include the namespace required to use Unity UI
-using UnityEngine.UI;
-
 using System.Collections;
 
 

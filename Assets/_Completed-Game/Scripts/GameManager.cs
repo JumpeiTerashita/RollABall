@@ -13,10 +13,6 @@ public class GameManager : SingleTon<GameManager>
 
     public ReactiveProperty<int> score = new ReactiveProperty<int>();
 
-    public Text countText;
-    public Text winText;
-    public Text announceText;
-
     public float waitSeconds = 2.0f;
     public bool isGameCleared;
 
@@ -25,10 +21,8 @@ public class GameManager : SingleTon<GameManager>
     // Use this for initialization
     void Start()
     {
-
         // Set the text property of our Win Text UI to an empty string, making the 'You Win' (game over message) blank
-        winText.text = "";
-        announceText.enabled = false;
+       
         isGameCleared = false;
         canInput.Subscribe(_canInput =>
         {
@@ -38,16 +32,12 @@ public class GameManager : SingleTon<GameManager>
        );
         canInput.Value = true;
 
-        score.Subscribe(_ =>
+        score.Subscribe(_score =>
             {
-                Debug.Log(score);
-                SetCountText();
+                Debug.Log(_score);
+                UiManager.Instance.SetCountText(_score);
             }
         );
-
-       
-
-
 
     }
 
@@ -60,24 +50,17 @@ public class GameManager : SingleTon<GameManager>
         }
     }
 
-    // Create a standalone function that can update the 'countText' UI and check if the required amount to win has been achieved
-    void SetCountText()
+    public void gameClear()
     {
-        countText.text = "Count: " + score.Value.ToString();
-
-        if (score.Value >= 12)
-        {
-            winText.text = "You Win!";
-            canInput.Value = false;
-            StartCoroutine(WaitTimer());
-        }
+        canInput.Value = false;
+        StartCoroutine(WaitEndTimer());
     }
 
-    IEnumerator WaitTimer()
+    IEnumerator WaitEndTimer()
     {
         yield return new WaitForSeconds(waitSeconds);
         isGameCleared = true;
-        announceText.enabled = true;
+        UiManager.Instance.setAnnounce();
         //StartCoroutine(WaitingInput());
         yield break;
     }
