@@ -5,13 +5,12 @@ using UnityEngine.UI;
 
 using System.Collections;
 
+
 public class PlayerController : MonoBehaviour
 {
 
     // Create public variables for player speed, and for the Text UI game objects
     public float speed;
-    public Text countText;
-    public Text winText;
 
     // Create private references to the rigidbody component on the player, and the count of pick up objects picked up so far
     private Rigidbody rb;
@@ -26,11 +25,8 @@ public class PlayerController : MonoBehaviour
         // Set the count to zero 
         count = 0;
 
-        // Run the SetCountText function to update the UI (see below)
-        SetCountText();
-
-        // Set the text property of our Win Text UI to an empty string, making the 'You Win' (game over message) blank
-        winText.text = "";
+     
+       
     }
 
     // Each physics step..
@@ -72,24 +68,13 @@ public class PlayerController : MonoBehaviour
             other.gameObject.SetActive(false);
 
             // Add one to the score variable 'count'
-            count = count + 1;
+            GameManager.Instance.score.Value++;
+            //count = count + 1;
 
             // Run the 'SetCountText()' function (see below)
-            SetCountText();
+            //SetCountText();
         }
     }
 
-    // Create a standalone function that can update the 'countText' UI and check if the required amount to win has been achieved
-    void SetCountText()
-    {
-        // Update the text field of our 'countText' variable
-        countText.text = "Count: " + count.ToString();
-
-        // Check if our 'count' is equal to or exceeded 12
-        if (count >= 12)
-        {
-            // Set the text value of our 'winText'
-            winText.text = "You Win!";
-        }
-    }
+   
 }
