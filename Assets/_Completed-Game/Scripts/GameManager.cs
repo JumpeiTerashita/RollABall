@@ -30,7 +30,10 @@ public class GameManager : SingleTon<GameManager>
             cameraObject.GetComponent<CameraController>().canInput = _canInput;
         }
        );
-        canInput.Value = true;
+
+        //  UiManagerで行われる
+        //  カウントダウン終了まで操作不可に
+        canInput.Value = false;
 
         score.Subscribe(_score =>
             {
