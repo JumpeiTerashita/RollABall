@@ -14,9 +14,13 @@ public class GameManager : SingleTon<GameManager>
     public ReactiveProperty<int> score = new ReactiveProperty<int>();
 
     public float waitSeconds = 2.0f;
+
+    [System.NonSerialized]
     public bool isGameCleared;
 
     public ReactiveProperty<bool> canInput = new ReactiveProperty<bool>();
+
+    public int targetNum;
 
     // Use this for initialization
     void Start()
