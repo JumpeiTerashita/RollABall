@@ -72,7 +72,7 @@ public class UiManager : SingleTon<UiManager>
                 .OnComplete(
                     () =>
                     {
-                        Debug.Log("countSeq Ended");
+                        //Debug.Log("countSeq Ended");
                         isCountSeqRunning = false;
                     }
                 )
