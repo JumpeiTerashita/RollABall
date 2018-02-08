@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// [Resources/Sound]フォルダにあるすべての音源アセットを管理します。
+/// [Resources/Sounds]フォルダにあるすべての音源アセットを管理します。
 /// </summary>
 public class SoundManager : MonoBehaviour
 {
@@ -25,6 +25,7 @@ public class SoundManager : MonoBehaviour
             {
                 var ob = new GameObject();
                 DontDestroyOnLoad(ob);
+                ob.name = "SoundManager";
                 ob.AddComponent<AudioSource>();
                 instance = ob.AddComponent<SoundManager>();
                 //instance.Init();
@@ -47,7 +48,8 @@ public class SoundManager : MonoBehaviour
     /// </summary>
     /// <param name="bgmname">Bgm name.(Asset name)</param>
     /// <param name="loop">True = Loop bgm.</param>
-    public void PlayBgm(string bgmname, bool loop)
+    /// <param name="volume">Bgm volume.</param>
+    public void PlayBgm(string bgmname, bool loop, float volume)
     {
         if (!clipDictionary.ContainsKey(bgmname)) return;
         var source = gameObject.GetComponent<AudioSource>();
@@ -58,6 +60,7 @@ public class SoundManager : MonoBehaviour
 
         source.clip = clipDictionary[bgmname];
         source.loop = loop;
+        source.volume = volume;
         source.Play();
     }
 
@@ -67,13 +70,16 @@ public class SoundManager : MonoBehaviour
     /// <param name="sename">Se name.(Asset name)</param>
     /// <param name="loop">True = Loop se.</param>
     /// <param name="pos">Se sound source point.</param>
-    public void PlaySe(string sename, bool loop, Vector3 pos)
+    /// <param name="volume">Se volume.</param>
+    public void PlaySe(string sename, bool loop, Vector3 pos, float volume = 1.0f)
     {
         if (!clipDictionary.ContainsKey(sename)) return;
 
         if (!seObjectDictionary.ContainsKey(sename))
         {
             seObjectDictionary[sename] = new GameObject();
+            seObjectDictionary[sename].name = "SE : "+sename;
+            DontDestroyOnLoad(seObjectDictionary[sename]); 
             seObjectDictionary[sename].AddComponent<AudioSource>();
         }
 
@@ -83,6 +89,7 @@ public class SoundManager : MonoBehaviour
         {
             source.loop = loop;
             source.clip = clipDictionary[sename];
+            source.volume = volume;
             source.Play();
         }
     }

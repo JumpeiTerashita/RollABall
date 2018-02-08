@@ -68,6 +68,8 @@ public class PlayerController : MonoBehaviour
         // ..and if the game object we intersect has the tag 'Pick Up' assigned to it..
         if (other.gameObject.CompareTag("Pick Up"))
         {
+            SoundManager.Instance.PlaySe("system48",false,new Vector3(0,0,0));
+
             // Make the other game object (the pick up) inactive, to make it disappear
             other.gameObject.SetActive(false);
 

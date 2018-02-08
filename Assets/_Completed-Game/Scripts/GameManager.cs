@@ -26,7 +26,8 @@ public class GameManager : SingleTon<GameManager>
     void Start()
     {
         // Set the text property of our Win Text UI to an empty string, making the 'You Win' (game over message) blank
-       
+        SoundManager.Instance.Init();
+        SoundManager.Instance.PlayBgm("blueneon1", true,1.0f);
         isGameCleared = false;
         canInput.Subscribe(_canInput =>
         {
@@ -65,6 +66,7 @@ public class GameManager : SingleTon<GameManager>
 
     IEnumerator WaitEndTimer()
     {
+        SoundManager.Instance.PlaySe("jingle06",false,Vector3.zero);
         yield return new WaitForSeconds(waitSeconds);
         isGameCleared = true;
         UiManager.Instance.setAnnounce();
