@@ -42,7 +42,7 @@ public class GameManager : SingleTon<GameManager>
 
         score.Subscribe(_score =>
             {
-                //Debug.Log(_score);
+                Debug.Log(_score);
                 UiManager.Instance.SetCountText(_score);
             }
         );
