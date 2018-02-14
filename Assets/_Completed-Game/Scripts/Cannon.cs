@@ -110,7 +110,7 @@ public class Cannon : MonoBehaviour
                                           // ターゲットの予測速度ベクトル
                 Vector3 tv = (target.transform.position - targetPosOld) / Time.deltaTime;
                 direction += tv * timeH; // 元いた場所に到達するまでの時間にターゲットが移動する先
-                v0Arr = MyMath.ParabolicVec(ParabolicPower, direction);
+                v0Arr = MyMath.ParabolicVec(ParabolicPower, direction, 5);
                 if (v0Arr == null)
                 {
                     return;

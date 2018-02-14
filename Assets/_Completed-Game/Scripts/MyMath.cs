@@ -37,6 +37,35 @@ namespace KTB
             return ret;
         }
 
+        //-----------------------------------------------------------------------
+        //! 力pで距離distに物体を投げるときのVec (retがnullの場合は届かない）
+        //-----------------------------------------------------------------------
+        public static Vector3[] ParabolicVec(float _power, Vector3 _dist,float _powerMagnitude)
+        {
+            float _p = _power;
+            float _g = Physics.gravity.y * _powerMagnitude;
+            Vector3[] ret = null;
+            Vector3 distXZ = new Vector3(_dist.x, 0f, _dist.z);
+            float dist_x = distXZ.magnitude;
+            float dist_y = _dist.y;
+            float a = (_g * dist_x * dist_x) / (2f * _p * _p);
+            float b = dist_x / a;
+            float c = (a - dist_y) / a;
+            float ts = (b * b / 4f) - c;
+            if (ts >= 0.0)
+            {
+                float rt = Mathf.Sqrt(-c + (b * b) / 4f);
+                float[] ang = new float[2] { Mathf.Atan((-b / 2f) - rt), Mathf.Atan((-b / 2f) + rt) };
+                ret = new Vector3[2];
+                for (int i = 0; i < 2; i++)
+                {
+                    ret[i] = distXZ.normalized * _p * Mathf.Cos(ang[i]);
+                    ret[i].y = _p * Mathf.Sin(ang[i]);
+                }
+            }
+            return ret;
+        }
+
         /// <summary>
         /// 第一引数 ＜＝　第二引数　ならtrue
         /// </summary>
