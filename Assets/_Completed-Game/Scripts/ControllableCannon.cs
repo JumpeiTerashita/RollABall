@@ -3,13 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using KTB;
 
-public enum DirMode
-{
-    Low = 0,
-    High = 1,
-}
-
-public class Cannon : MonoBehaviour
+public class ControllableCannon : MonoBehaviour
 {
 
     [SerializeField]
@@ -21,7 +15,7 @@ public class Cannon : MonoBehaviour
     float intervalTimer = 0;
 
     [SerializeField]
-    float interval = 1f;
+    float interval = 10f;
 
     [SerializeField]
     float arrivalTime = 1f;
@@ -45,7 +39,7 @@ public class Cannon : MonoBehaviour
 
     void LookTarget()
     {
-       
+
         direction = (target.transform.position - transform.position);
         forward = direction.normalized;
 
@@ -73,10 +67,11 @@ public class Cannon : MonoBehaviour
         return;
     }
 
-    
+
 
     private void Start()
     {
+        intervalTimer = interval;
         targetPosOld = target.transform.position;
     }
 
@@ -120,8 +115,8 @@ public class Cannon : MonoBehaviour
                 GameObject obj = Instantiate(bullet);
                 obj.GetComponent<Rigidbody>().useGravity = true;
                 obj.GetComponent<Rigidbody>().AddForce(v0, ForceMode.VelocityChange);
-
-                Destroy(obj, 10f);
+         
+                Destroy(obj, 7f);
             }
         }
         targetPosOld = target.transform.position;
