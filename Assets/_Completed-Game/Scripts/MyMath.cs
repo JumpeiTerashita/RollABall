@@ -12,7 +12,7 @@ namespace KTB
         //-----------------------------------------------------------------------
         //! 力pで距離distに物体を投げるときのVec (retがnullの場合は届かない）
         //-----------------------------------------------------------------------
-        public static Vector3[] CalcTargetVec(float _p, Vector3 _dist)
+        public static Vector3[] ParabolicVec(float _p, Vector3 _dist)
         {
             float _g = Physics.gravity.y;
             Vector3[] ret = null;
