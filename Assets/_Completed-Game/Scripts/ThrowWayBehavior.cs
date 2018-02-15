@@ -20,7 +20,7 @@ public class ThrowWayBehavior : MonoBehaviour {
         
         if (ReticuleBehavior.isMoving)
         {
-            Destroy(this.gameObject,0.1f);
+            Destroy(this.gameObject);
         }
     }
 

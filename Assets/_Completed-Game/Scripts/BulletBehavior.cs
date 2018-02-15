@@ -8,7 +8,11 @@ using KTB;
 public class BulletBehavior : MonoBehaviour
 {
     public Vector3 spd;
-    
+
+    [SerializeField]
+    GameObject explosion;
+
+
     // Use this for initialization
     void Start()
     {
@@ -24,6 +28,9 @@ public class BulletBehavior : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.tag == "Alone") return;
+
+        Instantiate(explosion,transform.position,Quaternion.identity);
 
         this.gameObject.GetComponent<SphereCollider>().enabled = false;
         var thisMaterial = this.gameObject.GetComponent<MeshRenderer>().material;
@@ -41,7 +48,11 @@ public class BulletBehavior : MonoBehaviour
                 1.2f
             )
             .SetEase(Ease.OutQuart)
-            .OnComplete(() => { this.gameObject.SetActive(false); })
+            .OnComplete(() => {
+
+                //this.gameObject.SetActive(false);
+                Destroy(gameObject);
+            })
         );
         // スケーリング
         seq.Join(

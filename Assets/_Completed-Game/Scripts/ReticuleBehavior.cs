@@ -48,7 +48,7 @@ public class ReticuleBehavior : MonoBehaviour
         }
         else isMoving = true;
 
-        Debug.Log("isMove : " + isMoving);
+        //Debug.Log("isMove : " + isMoving);
 
         // Create a Vector3 variable, and assign X and Z to feature our horizontal and vertical float variables above
         movement = new Vector3(moveHorizontal, 0.0f, moveVertical);

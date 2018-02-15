@@ -57,9 +57,9 @@ public class ThrowingScript : MonoBehaviour
             
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            // マウス左クリックでボールを射出する
+            // スペースキーでボールを射出する
             ThrowingBall();
         }
     }
