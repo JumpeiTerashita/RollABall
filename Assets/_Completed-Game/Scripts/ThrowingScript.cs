@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ThrowingScript : MonoBehaviour
 {
+    [SerializeField, Tooltip("射出するオブジェクトの軌跡表示")]
+    private GameObject ThrowWay;
+
     /// <summary>
     /// 射出するオブジェクト
     /// </summary>
@@ -22,6 +25,15 @@ public class ThrowingScript : MonoBehaviour
     [SerializeField, Range(0F, 90F), Tooltip("射出する角度")]
     private float ThrowingAngle;
 
+    [SerializeField]
+    private float interval = 0.5f;
+
+    [SerializeField]
+    private float lifeTime = 3.0f;
+
+    private float intervalCounter = 0;
+    
+
     private void Start()
     {
         Collider collider = GetComponent<Collider>();
@@ -34,6 +46,17 @@ public class ThrowingScript : MonoBehaviour
 
     private void Update()
     {
+        
+
+        intervalCounter += Time.deltaTime;
+
+        if (intervalCounter > interval)
+        {
+            intervalCounter -= interval;
+            if (!ReticuleBehavior.isMoving) DispThrowWay();
+            
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             // マウス左クリックでボールを射出する
@@ -63,6 +86,36 @@ public class ThrowingScript : MonoBehaviour
             // 射出
             Rigidbody rid = ball.GetComponent<Rigidbody>();
             rid.AddForce(velocity * rid.mass, ForceMode.Impulse);
+        }
+        else
+        {
+            throw new System.Exception("射出するオブジェクトまたは標的のオブジェクトが未設定です。");
+        }
+    }
+
+    private void DispThrowWay()
+    {
+        if (ThrowingObject != null && TargetObject != null)
+        {
+            // wayオブジェクトの生成
+            GameObject way = Instantiate(ThrowWay, this.transform.position, Quaternion.identity);
+
+            // 標的の座標
+            Vector3 targetPosition = TargetObject.transform.position;
+
+            // 射出角度
+            float angle = ThrowingAngle;
+
+            // 射出速度を算出
+            Vector3 velocity = CalculateVelocity(this.transform.position, targetPosition, angle);
+
+            // 射出
+            Rigidbody rid = way.GetComponent<Rigidbody>();
+            rid.AddForce(velocity * rid.mass, ForceMode.Impulse);
+
+            
+            
+            //Destroy(ball,lifeTime);
         }
         else
         {
