@@ -32,7 +32,7 @@ public class GameManager : SingleTon<GameManager>
         canInput.Subscribe(_canInput =>
         {
             playerObject.GetComponent<PlayerController>().canInput = _canInput;
-            cameraObject.GetComponent<CameraController>().canInput = _canInput;
+            cameraObject.GetComponent<KTB.CameraController>().canInput = _canInput;
         }
        );
 
