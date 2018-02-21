@@ -26,7 +26,7 @@ public class TankCannonCtrl : MonoBehaviour
         Quaternion cannonRot = Quaternion.AngleAxis(cannonAng, -Vector3.right);
         turretTr.localRotation = turretRot; //Quaternion.Lerp(turretTr.localRotation, turretRot, 0.2f);
         cannonTr.localRotation = cannonRot; //Quaternion.Lerp(cannonTr.localRotation, cannonRot, 0.2f);
-        Debug.DrawRay(cannonTr.position, cannonTr.forward * 100f);
+       
     }
 
     private float getLongitudeRad(Vector3 _dir)
