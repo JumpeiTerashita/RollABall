@@ -6,8 +6,7 @@ using DG.Tweening;
 
 public class EnemyBehavior : MonoBehaviour {
 
-    [SerializeField]
-    private GameObject target;
+    public GameObject target;
     private NavMeshAgent agent;
 
     [SerializeField]
@@ -31,11 +30,13 @@ public class EnemyBehavior : MonoBehaviour {
         Destroy(this.gameObject);
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        // ..and if the game object we intersect has the tag 'Pick Up' assigned to it..
-        if (other.gameObject.CompareTag("Finish"))
+        if (collision.gameObject.CompareTag("Bullet"))
         {
+            Debug.Log("Tag: " + collision.gameObject.tag);
+            Debug.Log("Name: " + collision.gameObject.name);
+            Instantiate(explosion, transform.position, Quaternion.identity);
             Invoke("Explode", 1f);
 
 
@@ -54,4 +55,6 @@ public class EnemyBehavior : MonoBehaviour {
 
         }
     }
+
+   
 }

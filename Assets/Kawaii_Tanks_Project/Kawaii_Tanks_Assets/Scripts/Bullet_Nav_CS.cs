@@ -57,6 +57,7 @@ namespace ChobiAssets.KTP
 
 		void OnCollisionEnter (Collision collision)
 		{
+            
 			if (isLive) {
 				isLive = false;
 				hitTransform = collision.collider.transform;
@@ -87,7 +88,7 @@ namespace ChobiAssets.KTP
 					damageScript.Get_Damage (hitEnergy);
 				}
 			}
-			Destroy (this.gameObject);
+			Destroy (this.gameObject,0.1f);
 		}
 	}
 

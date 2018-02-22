@@ -33,7 +33,7 @@ public class TankReticuleBehavior : MonoBehaviour {
 
         Debug.DrawRay(cannonTr.position, screenToWorldPointPosition - cannonTr.position);
 
-        if (Physics.Raycast(ray, out hit,30f))
+        if (Physics.Raycast(ray, out hit,50f))
         {
             //// Examples
             //// 衝突したオブジェクトの色を赤に変える
