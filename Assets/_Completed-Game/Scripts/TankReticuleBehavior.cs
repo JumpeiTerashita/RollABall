@@ -10,8 +10,8 @@ public class TankReticuleBehavior : MonoBehaviour {
 
     [SerializeField] Transform cannonTr; // 砲塔
 
+    //public LayerMask mask;
 
-    public LayerMask mask;
     // Use this for initialization
     void Start () {
 		
@@ -19,11 +19,21 @@ public class TankReticuleBehavior : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Ray ray = new Ray(cannonTr.position, cannonTr.forward * 30f);
+       
+        // Vector3でマウス位置座標を取得する
+        position = Input.mousePosition;
+        // Z軸修正
+        position.z = 30f;
+        // マウス位置座標をスクリーン座標からワールド座標に変換する
+        screenToWorldPointPosition = (Camera.main.ScreenToWorldPoint(position));
+
+        Ray ray = new Ray(cannonTr.position, screenToWorldPointPosition-cannonTr.position);
 
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 10.0f, mask))
+        Debug.DrawRay(cannonTr.position, screenToWorldPointPosition - cannonTr.position);
+
+        if (Physics.Raycast(ray, out hit,30f))
         {
             //// Examples
             //// 衝突したオブジェクトの色を赤に変える
@@ -33,22 +43,17 @@ public class TankReticuleBehavior : MonoBehaviour {
             // Rayの衝突地点に、このスクリプトがアタッチされているオブジェクトを移動させる
             //this.transform.position = hit.point;
             // Rayの原点から衝突地点までの距離を得る
-            float dis = hit.distance;
+            //Debug.Log("Object Hit");
+            gameObject.transform.position = hit.point+ (-hit.point + cannonTr.position).normalized * 2f;
+             
             // 衝突したオブジェクトのコライダーを非アクティブにする
             //hit.collider.enabled = false;
         }
-
-        Debug.DrawRay(cannonTr.position, cannonTr.forward * 30f);
-        // Vector3でマウス位置座標を取得する
-        position = Input.mousePosition;
-        // Z軸修正
-        position.z = 30f;
-        // マウス位置座標をスクリーン座標からワールド座標に変換する
-        screenToWorldPointPosition = (Camera.main.ScreenToWorldPoint(position));
+        else gameObject.transform.position = screenToWorldPointPosition;
 
 
         // ワールド座標に変換されたマウス座標を代入
-        gameObject.transform.position = screenToWorldPointPosition;
+        //gameObject.transform.position = screenToWorldPointPosition;
         Vector3 p = Camera.main.transform.position;
         p.y = transform.position.y;
         transform.LookAt(p);
