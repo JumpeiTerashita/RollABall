@@ -11,9 +11,9 @@ public class PointController : MonoBehaviour
     void Start()
     {
       
-        mesh.SetIndices(mesh.GetIndices(0), MeshTopology.Lines, 0);
-        mesh01.SetIndices(mesh01.GetIndices(0), MeshTopology.Lines, 0);
-        mesh02.SetIndices(mesh02.GetIndices(0), MeshTopology.Lines, 0);
+        mesh.SetIndices(mesh.GetIndices(0), MeshTopology.Triangles, 0);
+        mesh01.SetIndices(mesh01.GetIndices(0), MeshTopology.Triangles, 0);
+        mesh02.SetIndices(mesh02.GetIndices(0), MeshTopology.Triangles, 0);
 
     }
 }
